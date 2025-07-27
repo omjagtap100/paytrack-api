@@ -1,0 +1,232 @@
+{
+  "realm": "paytrack",
+  "enabled": true,
+  "displayName": "PayTrack Employee Management System",
+  "roles": {
+    "realm": [
+      {
+        "name": "isadmin",
+        "description": "Administrator role with full system access"
+      },
+      {
+        "name": "isaccountsection", 
+        "description": "Accounts section role for financial operations"
+      },
+      {
+        "name": "isHr",
+        "description": "Human Resources role for employee management"
+      },
+      {
+        "name": "ismanager",
+        "description": "Manager role for team leadership and oversight"
+      },
+      {
+        "name": "employee",
+        "description": "Basic employee role"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "employees",
+      "name": "PayTrack Employee Client",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "employees-client-secret-2024",
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "https://paytrack.company.com/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000",
+        "https://paytrack.company.com"
+      ],
+      "attributes": {
+        "access.token.lifespan": "300",
+        "refresh.token.lifespan": "1800"
+      },
+      "protocolMappers": [
+        {
+          "name": "roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles"
+          }
+        },
+        {
+          "name": "employee-id",
+          "protocol": "openid-connect", 
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "employeeId",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "employeeId"
+          }
+        },
+        {
+          "name": "department",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper", 
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "department",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "department"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "admin.user",
+      "enabled": true,
+      "firstName": "System",
+      "lastName": "Administrator", 
+      "email": "admin@paytrack.com",
+      "emailVerified": true,
+      "attributes": {
+        "employeeId": ["EMP001"],
+        "department": ["IT"],
+        "position": ["System Administrator"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "AdminPass123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["isadmin", "employee"]
+    },
+    {
+      "username": "hr.manager",
+      "enabled": true,
+      "firstName": "Sarah",
+      "lastName": "Johnson",
+      "email": "sarah.johnson@paytrack.com", 
+      "emailVerified": true,
+      "attributes": {
+        "employeeId": ["EMP002"],
+        "department": ["Human Resources"],
+        "position": ["HR Manager"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "HrPass123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["isHr", "employee"]
+    },
+    {
+      "username": "accounts.lead",
+      "enabled": true,
+      "firstName": "Michael", 
+      "lastName": "Chen",
+      "email": "michael.chen@paytrack.com",
+      "emailVerified": true,
+      "attributes": {
+        "employeeId": ["EMP003"],
+        "department": ["Accounts"],
+        "position": ["Accounts Lead"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "AccPass123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["isaccountsection", "employee"]
+    },
+    {
+      "username": "team.manager",
+      "enabled": true,
+      "firstName": "Emily",
+      "lastName": "Rodriguez",
+      "email": "emily.rodriguez@paytrack.com",
+      "emailVerified": true,
+      "attributes": {
+        "employeeId": ["EMP004"],
+        "department": ["Engineering"], 
+        "position": ["Engineering Manager"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "MgrPass123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["ismanager", "employee"]
+    },
+    {
+      "username": "john.doe",
+      "enabled": true,
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@paytrack.com",
+      "emailVerified": true,
+      "attributes": {
+        "employeeId": ["EMP005"],
+        "department": ["Engineering"],
+        "position": ["Software Developer"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "EmpPass123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["employee"]
+    },
+    {
+      "username": "jane.smith",
+      "enabled": true,
+      "firstName": "Jane",
+      "lastName": "Smith", 
+      "email": "jane.smith@paytrack.com",
+      "emailVerified": true,
+      "attributes": {
+        "employeeId": ["EMP006"],
+        "department": ["Marketing"],
+        "position": ["Marketing Specialist"]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "EmpPass123!",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["employee"]
+    }
+  ],
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 36000,
+  "offlineSessionIdleTimeout": 2592000,
+  "accessCodeLifespan": 60,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "registrationAllowed": false,
+  "rememberMe": false,
+  "verifyEmail": false,
+  "bruteForceProtected": true
+}
