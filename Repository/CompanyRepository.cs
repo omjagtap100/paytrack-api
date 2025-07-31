@@ -14,7 +14,6 @@ namespace paytrack_api.Repository
         }
         public async Task<IEnumerable<Company>> GetCompanies()
         {
-
             var query = "SELECT * FROM Company";
             var companies = await _connection.QueryAsync<Company>(query);
             _connection.Close();
@@ -22,3 +21,5 @@ namespace paytrack_api.Repository
         }
     }
 }
+
+

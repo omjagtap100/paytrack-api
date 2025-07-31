@@ -7,7 +7,8 @@ namespace paytrack_api.Services
     public class CompanyService: ICompanyService
     {
         private readonly ICompanyRepository _companyRepository;
-        public CompanyService(ICompanyRepository companyRepository) {
+        public CompanyService(ICompanyRepository companyRepository) 
+        {
             this._companyRepository = companyRepository;
         }
         public async Task<IEnumerable<Company>> GetCompanyData() {

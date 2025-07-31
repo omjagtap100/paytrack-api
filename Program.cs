@@ -3,16 +3,23 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using paytrack_api.Middlewares;
 using paytrack_api.Repository;
 using paytrack_api.Repository.Interfaces;
 using paytrack_api.Services;
 using paytrack_api.Services.Interfaces;
+//using paytrack_api.Middlewares;
+using System.Globalization;
+
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Register DapperConnection
 builder.Services.AddSingleton<DapperConnection>();
-builder.Services.AddSingleton<ICompanyRepository, CompanyRepository>();
+builder.Services.AddSingleton<ICompanyRepository,CompanyRepository>();
 builder.Services.AddSingleton<ICompanyService, CompanyService>();
 
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -65,29 +72,24 @@ builder.Services.AddSingleton<ICompanyService, CompanyService>();
 //        };
 //    });
 
-// Add services
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Swagger configuration
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        // Authority: Keycloak Realm issuer URL
         options.Authority = "http://localhost:8080/realms/payroll-realm";
-        // Audience: our API's client ID in Keycloak
         options.Audience = "account";
-        // Disable HTTPS metadata requirement for dev (use true in production)
         options.RequireHttpsMetadata = false;
-        // Token validation parameters
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = false,
-            // (Optional) If needed, set RoleClaimType to "roles" or other to map roles correctly
-            // RoleClaimType = "roles"
+       
         };
     });
 builder.Services.AddSwaggerGen(c =>
@@ -97,23 +99,22 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Always enable Swagger (even in production)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "PayTrack API V1");
-    c.RoutePrefix = string.Empty; // Loads Swagger at http://localhost:5000/
+    c.RoutePrefix = string.Empty;
 });
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.UseRequestLocale();
+builder.Logging.AddConsole(); 
+builder.Logging.AddDebug();
 
-//app.MapGet("/secure", [Authorize] () => "This is a secure endpoint!");
-//app.MapGet("/unsecure", () => "This is a unsecure endpoint!");
 
-// Dapper test route
 app.MapGet("/test-dapper", async (DapperConnection context) =>
 {
     using var connection = context.CreateConnection();

@@ -6,5 +6,7 @@ namespace paytrack_api.Services.Interfaces
     public interface ICompanyService
     {
         public  Task<IEnumerable<Company>> GetCompanyData();
+
+
     }
 }
