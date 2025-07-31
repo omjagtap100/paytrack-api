@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using paytrack_api.Models;
+using paytrack_api.Services.Interfaces;
 
 namespace paytrack_api.Controllers
 {
@@ -8,6 +10,11 @@ namespace paytrack_api.Controllers
     [Route("api/[controller]")]
     public class TestController : ControllerBase
     {
+        public readonly ICompanyService _companyService ;
+        public TestController(ICompanyService companyService)
+        {
+            this._companyService = companyService;
+        }
         //[Authorize]
         [HttpGet("{id}")]
         public IActionResult ValidateToken()
@@ -41,6 +48,12 @@ namespace paytrack_api.Controllers
                 AuthorizationHeader = tokenHeader,
                 Claims = claims
             });
+        }
+        [HttpGet("testFlow")]
+        public async Task<ActionResult<IEnumerable<Company>>> testFlow()
+        {
+            
+            return Ok(await _companyService.GetCompanyData());
         }
 
     }

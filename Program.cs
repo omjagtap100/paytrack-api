@@ -3,11 +3,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using paytrack_api.Repository;
+using paytrack_api.Repository.Interfaces;
+using paytrack_api.Services;
+using paytrack_api.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Register DapperConnection
 builder.Services.AddSingleton<DapperConnection>();
+builder.Services.AddSingleton<ICompanyRepository, CompanyRepository>();
+builder.Services.AddSingleton<ICompanyService, CompanyService>();
 
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //    .AddJwtBearer(options =>
