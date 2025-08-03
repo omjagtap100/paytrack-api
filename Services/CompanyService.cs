@@ -14,5 +14,11 @@ namespace paytrack_api.Services
         public async Task<IEnumerable<Company>> GetCompanyData() {
            return  await _companyRepository.GetCompanies();
         }
+        public async Task<Company> GetById(int id)
+        {
+            var company = _companyRepository.GetById(id);
+            return company;
+        }
+
     }
 }

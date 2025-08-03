@@ -52,8 +52,14 @@ namespace paytrack_api.Controllers
         [HttpGet("testFlow")]
         public async Task<ActionResult<IEnumerable<Company>>> testFlow()
         {
-            
+
             return Ok(await _companyService.GetCompanyData());
+        }
+        [HttpGet("GetCompanyById")]
+        public async Task<ActionResult<IEnumerable<Company>>> GetById()
+        {
+
+            return Ok( _companyService.GetById(1));
         }
 
     }

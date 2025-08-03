@@ -5,10 +5,10 @@ using System.Data;
 
 namespace paytrack_api.Repository
 {
-    public class CompanyRepository: ICompanyRepository
+    public class CompanyRepository: Repository<Company>, ICompanyRepository
     {
         private readonly IDbConnection _connection;
-        public CompanyRepository(DapperConnection context)
+        public CompanyRepository(DapperConnection context): base(context)
         {
             this._connection = context.CreateConnection();
         }

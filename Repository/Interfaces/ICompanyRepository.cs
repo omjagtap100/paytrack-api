@@ -2,7 +2,7 @@
 
 namespace paytrack_api.Repository.Interfaces
 {
-    public interface ICompanyRepository
+    public interface ICompanyRepository:IRepository<Company>
     {
         public Task<IEnumerable<Company>> GetCompanies();
     }
