@@ -14,11 +14,22 @@ namespace paytrack_api.Controllers
         {
             this._employeeService = employeeService;
         }
-        [HttpPost("AddEmployee")]
-        public async Task<ActionResult<IEnumerable<bool>>> Add([FromBody] Employee employee)
+       
+        [HttpGet("GetAllEmployees")]
+        public async Task<IActionResult> GetAll()
         {
-
-            return Ok(await _employeeService.Add(employee));
+            try
+            {
+                var employees = await _employeeService.GetAll();
+                return Ok(employees);
+            }
+            catch (Exception ex)
+            {
+               
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
+
+
     }
 }
