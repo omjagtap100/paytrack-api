@@ -18,6 +18,7 @@ namespace paytrack_api.Middlewares
             Console.WriteLine($"Method: {context.Request.Method}");
             Console.WriteLine($"Path: {context.Request.Path}");
             string requestBody = "";
+            context.Request.EnableBuffering();
             using (var reader = new StreamReader(
                 context.Request.Body,
                 encoding: Encoding.UTF8,
@@ -25,6 +26,7 @@ namespace paytrack_api.Middlewares
                 leaveOpen: true))
             {
                 requestBody = await reader.ReadToEndAsync();
+                context.Request.Body.Position = 0;
             }
             _logger.LogInformation("Request Body:{@requestBody}", requestBody);
       

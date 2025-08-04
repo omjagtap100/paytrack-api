@@ -18,9 +18,14 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Register DapperConnection
-builder.Services.AddSingleton<DapperConnection>();
-builder.Services.AddSingleton<ICompanyRepository,CompanyRepository>();
-builder.Services.AddSingleton<ICompanyService, CompanyService>();
+builder.Services.AddScoped<DapperConnection>();
+
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
 
 //builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //    .AddJwtBearer(options =>

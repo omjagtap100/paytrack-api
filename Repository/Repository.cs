@@ -156,6 +156,7 @@ namespace paytrack_api.Repository
         private string GetColumns(bool excludeKey = false)
         {
             var type = typeof(T);
+            Console.WriteLine(type.GetProperties());
             var columns = string.Join(", ", type.GetProperties()
                 .Where(p => !excludeKey || !p.IsDefined(typeof(KeyAttribute)))
                 .Select(p =>

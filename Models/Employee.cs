@@ -1,27 +1,37 @@
 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Employee
+namespace paytrack_api.Models
 {
-    public int Id { get; set; }
+    [Table("Employees")]
+    public class Employee
+    {
+        [Key]
+        [Column("id")]
+        public int Id { get; set; }
+        [Column("FirstName")]
 
-    public string? FirstName { get; set; } 
-
-    public string? LastName { get; set; } 
-
-    public string? Email { get; set; }
-
-    public int OrganizationId { get; set; }
-
-    public bool? IsAccount { get; set; }
-
-    public bool? IsHR { get; set; }
-
-    public string? AccountNo { get; set; }
-
-    public string? IfscCode { get; set; }
-
-    public int? HRId { get; set; }
-
-    public bool? IsManager { get; set; }
-    public string? keycloak_user_id { get; set; }
+        public string? FirstName { get; set; }
+        [Column("LastName")]
+        public string? LastName { get; set; }
+        [Column("Email")]
+        public string? Email { get; set; }
+        [Column("OrganizationId")]
+        public int OrganizationId { get; set; }
+        [Column("IsAccount")]
+        public bool? IsAccount { get; set; }
+        [Column("IsHR")]
+        public bool? IsHR { get; set; }
+        [Column("AccountNo")]
+        public string? AccountNo { get; set; }
+        [Column("IfscCode")]
+        public string? IfscCode { get; set; }
+        [Column("HRId")]
+        public int? HRId { get; set; }
+        [Column("IsManager")]
+        public bool? IsManager { get; set; }
+        [Column("keycloak_user_id")]
+        public string? keycloak_user_id { get; set; }
     }
+}
