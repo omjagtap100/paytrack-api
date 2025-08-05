@@ -2,7 +2,7 @@
 
 namespace paytrack_api.Repository.Interfaces
 {
-    public interface IEmployeeRepository: IRepository<Employee>
+    public interface IEmployeeRepository : IRepository<Employee>
     {
     }
 }

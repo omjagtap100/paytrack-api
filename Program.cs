@@ -23,11 +23,13 @@ builder.Services.AddScoped<DapperConnection>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<ISalariesRepository, SalariesRepository>();
 
 
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ISalariesService, SalariesService>();
 
 
 
