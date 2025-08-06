@@ -111,7 +111,7 @@ namespace paytrack_api.Repository
             return rowsEffected > 0 ? true : false;
         }
 
-        private string GetTableName()
+        public string GetTableName()
         {
             string tableName = "";
             var type = typeof(T);

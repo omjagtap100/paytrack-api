@@ -5,7 +5,7 @@ namespace paytrack_api.Services.Interfaces
 {
     public interface ISalariesService : IService<Salaries>
     {
-
+        public  Task<Salaries> GetByEmpId(int empId);
     }
 }
 

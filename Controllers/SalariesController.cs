@@ -29,21 +29,21 @@ namespace paytrack_api.Controllers
             }
         }
 
-        [HttpGet("GetSalaryById/{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("GetSalaryById/{empId:int}")]
+        public async Task<IActionResult> GetById(int empId)
         {
-            if (id <= 0)
+            if (empId <= 0)
             {
                 return BadRequest("Invalid salary ID.");
             }
 
             try
             {
-                var salary = await _salariesService.GetById(id);
+                var salary = await _salariesService.GetById(empId);
 
                 if (salary == null)
                 {
-                    return NotFound($"Salary record with ID {id} not found.");
+                    return NotFound($"Salary record with empId {empId} not found.");
                 }
 
                 return Ok(salary);
@@ -108,20 +108,20 @@ namespace paytrack_api.Controllers
             }
         }
 
-        [HttpDelete("DeleteSalary/{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("DeleteSalary/{empId:int}")]
+        public async Task<IActionResult> Delete(int empId)
         {
-            if (id <= 0)
+            if (empId <= 0)
             {
-                return BadRequest("Invalid salary ID.");
+                return BadRequest("Invalid salary empId.");
             }
 
             try
             {
-                var salary = await _salariesService.GetById(id);
+                var salary = await _salariesService.GetByEmpId(empId);
                 if (salary == null)
                 {
-                    return NotFound($"Salary record with ID {id} not found.");
+                    return NotFound($"Salary record with ID {empId} not found.");
                 }
 
                 bool isDeleted = await _salariesService.Delete(salary);
