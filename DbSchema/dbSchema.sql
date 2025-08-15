@@ -116,14 +116,26 @@ CREATE TABLE "handleQueriesEmployees" (
     CONSTRAINT "fk_handlequeries_assignedto" 
         FOREIGN KEY ("assignedTo") REFERENCES "Employees"("id"),
             CONSTRAINT "fk_handlequeries_organization" 
-        FOREIGN KEY ("organizationId") REFERENCES "Organizations"("id")
+        FOREIGN KEY ("organizationId") REFERENCES "Organization"("id")
 );
 
 
-CREATE TABLE "handleQueriesClient"(
+CREATE TABLE "handleQueriesClient" (
     "id" INT IDENTITY(1,1) NOT NULL,
     "description" VARCHAR(255) NOT NULL,
-    "clientId" INT NOT NULL,
-    "status" NVARCHAR(255) CHECK ("status" IN(N'pending', N'resolved')) NOT NULL DEFAULT 'pending',
-    CONSTRAINT "handlequeriesclient_id_primary" PRIMARY KEY("id")
+    "clientId" INT NOT NULL,          
+    "assignedTo" INT NULL,              
+    "organizationId" INT NOT NULL,      
+    "status" NVARCHAR(255) 
+        CHECK ("status" IN (N'pending', N'resolved')) 
+        NOT NULL DEFAULT 'pending',
+    "createdAt" DATETIME NOT NULL DEFAULT GETDATE(),
+    "resolvedAt" DATETIME NULL,
+    CONSTRAINT "pk_handlequeriesclient" PRIMARY KEY ("id"),
+    CONSTRAINT "fk_handlequeriesclient_client" 
+        FOREIGN KEY ("clientId") REFERENCES "Clients"("id"),
+    CONSTRAINT "fk_handlequeriesclient_assignedto" 
+        FOREIGN KEY ("assignedTo") REFERENCES "Employees"("id"),
+    CONSTRAINT "fk_handlequeriesclient_organization" 
+        FOREIGN KEY ("organizationId") REFERENCES "Organization"("id")
 );
