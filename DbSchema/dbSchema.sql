@@ -100,6 +100,25 @@ CREATE TABLE "handleQueriesEmployees"(
     "status" NVARCHAR(255) CHECK ("status" IN(N'pending', N'resolved')) NOT NULL DEFAULT 'pending',
     CONSTRAINT "handlequeriesemployees_id_primary" PRIMARY KEY("id")
 );
+CREATE TABLE "handleQueriesEmployees" (
+    "id" INT IDENTITY(1,1) NOT NULL,
+    "description" VARCHAR(255) NOT NULL, 
+    "employeeId" INT NOT NULL,   
+        "organizationId" INT NOT NULL, 
+    "assignedTo" INT NULL,               
+    "status" NVARCHAR(255) CHECK ("status" IN(N'pending', N'resolved')) 
+        NOT NULL DEFAULT 'pending',
+    "createdAt" DATETIME NOT NULL DEFAULT GETDATE(), 
+    "resolvedAt" DATETIME NULL,                
+    CONSTRAINT "handlequeriesemployees_id_primary" PRIMARY KEY("id"),
+    CONSTRAINT "fk_handlequeries_employee" 
+        FOREIGN KEY ("employeeId") REFERENCES "Employees"("id"),
+    CONSTRAINT "fk_handlequeries_assignedto" 
+        FOREIGN KEY ("assignedTo") REFERENCES "Employees"("id"),
+            CONSTRAINT "fk_handlequeries_organization" 
+        FOREIGN KEY ("organizationId") REFERENCES "Organizations"("id")
+);
+
 
 CREATE TABLE "handleQueriesClient"(
     "id" INT IDENTITY(1,1) NOT NULL,
